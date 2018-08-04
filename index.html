@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Packing List</title>
+	<link href='https://fonts.googleapis.com/css?family=Rokkitt' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:700,600,400' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="style.css" media="screen" type="text/css">
+</head>
+<body>
+
+	<header>
+		<!-- <h1>Packing List</h1> 
+		 make this editable and put all of the elements in a div then enable div switching
+		add edit button and save button make buttons disapear when saved
+		add minimizer option to just show the title
+		enable drag and drop
+		check saving and retrieving still works
+		-->
+		<a href='#' id='addNewList'>+ Add New List</a>
+	</header>
+
+	<div id="allLists"></div>
+		
+	<script id="newList" type="text/template">
+		<div id="noteList{{listId}}" class="noteList">
+			<div id="listTitle{{listId}}">
+				<h1>New List {{listId}}</h1>
+				<a href='#' class='rename'>Rename List</a>
+				<a href='#' class='remove'>Remove List</a>
+			</div>
+			<form id="packingForm{{listId}}">
+				<input type="text" id="newItemDescription{{listId}}" placeholder="What do you need to pack?">
+				<button type="submit" class="btn">Add Item</button>
+			</form>
+
+			<ul id="packingList{{listId}}" class"packingForm"></ul>
+			
+
+			<div id="itemSummary{{listId}}" class="itemSummary">
+				<p>You have <span>0 items</span> in your list.</p>
+				<button id="deleteItems{{listId}}" class="btn delete">Delete All Items</button>
+				<button id="clearPacked{{listId}}" class="btn clear">Clear Ticked Items</button>			
+			</div>
+		</div>
+	</script>	
+
+	<script id="packingListTemp" type="text/template">
+		<li>
+			<input type='checkbox'>
+			<span class='item'>{{itemText}}</span><a href='#' class='edit'>Edit</a><a href='#' class='remove'>Remove</a>
+		</li>
+	</script>
+	<script id="editorPackingListTemp" type="text/template">
+		<form id="editor{{listId}}">
+			<input type="text" value="{{itemText}}">
+			<button type="submit" class="btn">Save</button>
+		</form>
+	</script>
+	<script id="savePackingListTemp" type="text/temlate">
+		<input type='checkbox'>
+		<span class='item'>{{itemText}}</span>
+		<a href='#' class='edit'>Edit</a>
+		<a href='#' class='remove'>Remove</a>
+	</script>
+
+	<script src="main.js"></script>
+</body>
+</html>

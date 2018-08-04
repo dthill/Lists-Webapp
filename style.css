@@ -1,0 +1,148 @@
+/* ------------------------------------------------
+  G L O B A L  S T Y L E S
+---------------------------------------------------*/
+*{
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 1em; /* 16 px */
+  background-color: #eee;
+}
+
+body {
+  
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  color: #666;
+  width: 100%;
+  max-width: 600px;
+  margin: 10px auto;
+  background: #ffffff;
+  padding: 1rem 1rem;
+  box-shadow: 0 0 2px rgba(0,0,0,0.2);
+}
+
+/* ------------------------------------------------
+  C O N T A I N E R   S T Y L E S
+---------------------------------------------------*/
+
+h1 {
+    font-family: 'Rokkitt', sans-serif;
+    text-align: center;
+    font-weight: 400;
+    margin: 0;
+}
+
+button {
+  border: none;
+  border-radius: 2px;
+  outline: none;
+  padding: 1.018em 1.2em;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  text-align: center;
+  background-color: #444;
+  cursor: pointer;
+  width: 10em;
+  margin: 0 auto;
+}
+
+.btn:hover {
+  background-color: #303030;
+}
+
+
+/* ------------------------------------------------
+  F O R M   S T Y L E S
+---------------------------------------------------*/
+.packingForm {
+  margin: 0 auto;
+  text-align: center;
+}
+
+input[type="text"] {
+    height: 41px;
+    border-radius: 2px;
+    outline: none;
+    border: 1px solid #e5e5e5;
+    width: 100%;
+    margin: 5px auto;
+    font-size: 0.813rem;
+}
+
+
+
+/* ------------------------------------------------
+  L I S T   S T Y L E S
+---------------------------------------------------*/
+ul {
+  margin: 0;
+  list-style: none;
+  padding-left: 0;
+}
+
+li {
+  font-size: 0.975rem;
+  padding: 1.2em 0;
+  border-top: 1px solid #e5e5e5;
+}
+
+li input[type="checkbox"] {
+  margin-right: 20px;
+}
+
+a {
+  color: #444444;
+  margin-left: 15px;
+}
+
+li span {
+  margin-right: 20px;
+}
+
+a:hover {
+  color: red;
+}
+
+.packed span {
+  text-decoration: line-through;
+  color: #bebebe;
+}
+
+/* ------------------------------------------------
+  C O U N T   W R A P P E R
+---------------------------------------------------*/
+.itemSummary {
+  border-top: 1px solid #e5e5e5;
+  padding-top: 1.5em;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 1500ms;
+}
+
+.itemSummary p {
+  -webkit-font-smoothing: antialiased;
+  color: #95a5a6;
+  font-size: .8em;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin: 0 0 1.2em;
+}
+
+.itemSummary span {
+  color: #777;
+}
+
+.itemSummary .btn {
+  margin-right: 1em;
+}
+
+.delete {
+  background-color: #e74c3c;
+}
+
+.delete:hover {
+  background-color: #c0392b;
+}
