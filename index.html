@@ -23,24 +23,24 @@
 	<div id="allLists"></div>
 		
 	<script id="newList" type="text/template">
-		<div id="noteList{{listId}}" class="noteList">
-			<div id="listTitle{{listId}}">
+		<div class="noteList">
+			<div class="listTitle">
 				<h1>New List {{listId}}</h1>
 				<a href='#' class='rename'>Rename List</a>
 				<a href='#' class='remove'>Remove List</a>
 			</div>
-			<form id="packingForm{{listId}}">
-				<input type="text" id="newItemDescription{{listId}}" placeholder="What do you need to pack?">
+			<form class="packingForm">
+				<input type="text" class="newItemDescription" placeholder="What do you want to add?">
 				<button type="submit" class="btn">Add Item</button>
 			</form>
 
-			<ul id="packingList{{listId}}" class"packingForm"></ul>
+			<ul class="packingList"></ul>
 			
 
-			<div id="itemSummary{{listId}}" class="itemSummary">
+			<div class="itemSummary hide">
 				<p>You have <span>0 items</span> in your list.</p>
-				<button id="deleteItems{{listId}}" class="btn delete">Delete All Items</button>
-				<button id="clearPacked{{listId}}" class="btn clear">Clear Ticked Items</button>			
+				<button class="btn deleteAll">Delete All Items</button>
+				<button class="btn clearAll">Clear Ticked Items</button>			
 			</div>
 		</div>
 	</script>	
@@ -48,20 +48,16 @@
 	<script id="packingListTemp" type="text/template">
 		<li>
 			<input type='checkbox'>
-			<span class='item'>{{itemText}}</span><a href='#' class='edit'>Edit</a><a href='#' class='remove'>Remove</a>
+			<span class='item'>{{itemText}}</span>
+			<a href='#' class='editLi'>Edit</a>
+			<a href='#' class='removeLi'>Remove</a>
 		</li>
 	</script>
 	<script id="editorPackingListTemp" type="text/template">
-		<form id="editor{{listId}}">
+		<form class="editor">
 			<input type="text" value="{{itemText}}">
 			<button type="submit" class="btn">Save</button>
 		</form>
-	</script>
-	<script id="savePackingListTemp" type="text/temlate">
-		<input type='checkbox'>
-		<span class='item'>{{itemText}}</span>
-		<a href='#' class='edit'>Edit</a>
-		<a href='#' class='remove'>Remove</a>
 	</script>
 
 	<script src="main.js"></script>

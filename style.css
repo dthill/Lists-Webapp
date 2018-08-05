@@ -17,9 +17,9 @@ body {
   color: #666;
   width: 100%;
   max-width: 600px;
-  margin: 10px auto;
+  margin: 5px auto;
   background: #ffffff;
-  padding: 1rem 1rem;
+  padding: 1rem 0.4rem 0.1rem 0.4rem;
   box-shadow: 0 0 2px rgba(0,0,0,0.2);
 }
 
@@ -45,14 +45,26 @@ button {
   text-align: center;
   background-color: #444;
   cursor: pointer;
-  width: 10em;
   margin: 0 auto;
 }
 
 .btn:hover {
   background-color: #303030;
 }
+ .noteList{
+  border: solid 1px black;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  width: 100%;
+ }
 
+ .allLists{
+  padding: 0;
+  margin: 0;
+  width: 100%;
+ }
 
 /* ------------------------------------------------
   F O R M   S T Y L E S
@@ -66,8 +78,8 @@ input[type="text"] {
     height: 41px;
     border-radius: 2px;
     outline: none;
-    border: 1px solid #e5e5e5;
-    width: 100%;
+    border: 1px solid black;
+    width: 60%;
     margin: 5px auto;
     font-size: 0.813rem;
 }
@@ -118,8 +130,15 @@ a:hover {
   border-top: 1px solid #e5e5e5;
   padding-top: 1.5em;
   text-align: center;
-  opacity: 0;
-  transition: opacity 1500ms;
+  transition: all 1500ms;
+}
+
+.hide {
+  display: none;
+}
+
+.show{
+  display: block;
 }
 
 .itemSummary p {
@@ -136,13 +155,13 @@ a:hover {
 }
 
 .itemSummary .btn {
-  margin-right: 1em;
+  margin-right: 0.5em;
 }
 
-.delete {
+.deleteAll {
   background-color: #e74c3c;
 }
 
-.delete:hover {
+.deleteAll:hover {
   background-color: #c0392b;
 }

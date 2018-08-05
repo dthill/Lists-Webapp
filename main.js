@@ -1,5 +1,6 @@
 var listId = 0;
 
+//handlebars like takes a HTML element and an object with each key to replace text
 function toTemplate(htmlTemplate, dataObject){
   htmlTemplate = htmlTemplate.innerHTML;
   Object.keys(dataObject).forEach(function(dataItem){
@@ -9,101 +10,42 @@ function toTemplate(htmlTemplate, dataObject){
   return htmlTemplate;
 }
 
+//saves to local storage, entire div as HTML with all the list and listId
 function saveToLocal(){
   var listsToSave = document.getElementById("allLists").innerHTML
   localStorage.setItem("savedLists", listsToSave);
+  localStorage.setItem("listId", listId);
+}
+
+//updates the count for all the lists, saves all the lists to local storage
+function updateCount(){{}
+    //loop through all the lists
+    Array.from(document.getElementById("allLists").children).forEach(function(individualList){
+      var itemsToPack = 0;
+      //loop through all li items in each list
+      Array.from(individualList.children[2].children).forEach(function(listItem){
+        if(!listItem.classList.contains("packed")){
+          itemsToPack++;
+        }
+      });
+      //update items left on the list text and make buttons visible invisble if there are items
+      var itemText = itemsToPack === 1 ? itemsToPack + " item" : itemsToPack + " items";
+      individualList.children[3].children[0].children[0].innerText = itemText;
+      if(individualList.children[2].children.length){
+        individualList.children[3].classList.remove("hide");
+      } else {
+        individualList.children[3].classList.remove("show");
+      }
+    });
+    saveToLocal();
 }
 
 
 function createNewList(){
   listId++;
   var listData = {listId: listId};
-  //create HTML
   document.getElementById("allLists").insertAdjacentHTML("afterbegin", toTemplate(document.getElementById("newList"), listData));
-
-  function updateCount(){
-    var itemsToPack = document.querySelectorAll("#packingList"+listData.listId+" li:not(.packed)").length;
-    var itemText = itemsToPack === 1 ? itemsToPack + " item" : itemsToPack + " items";
-    document.querySelector("#itemSummary"+listData.listId+" span").innerText = itemText;
-    if(document.getElementById("packingList"+listData.listId).children.length > 0){
-      document.getElementById("itemSummary"+listData.listId).style.opacity = "1";
-    } else {
-      document.getElementById("itemSummary"+listData.listId).style.opacity = "0";
-    }
-  }
-
-  document.getElementById("listTitle"+listData.listId).addEventListener("click", function(event){
-    if(event.target.classList.contains("remove")){
-      event.preventDefault();
-      this.parentNode.parentNode.removeChild(this.parentNode);
-    }
-    if(event.target.classList.contains("rename")){
-      event.preventDefault();
-      var data = {itemText: this.children[0].innerHTML, listId: listData.listId};
-      this.children[1].innerHTML = toTemplate(document.getElementById("editorPackingListTemp"), data);
-    }
-  });
-
-  document.getElementById("listTitle"+listData.listId).addEventListener("submit", function(event){
-      event.preventDefault();
-      this.children[0].innerHTML = event.target.children[0].value;
-      event.target.parentNode.innerHTML = "Rename";
-    });
-  
-
-  document.getElementById("packingForm"+listData.listId).addEventListener("submit" , function(event){
-    event.preventDefault();
-    var data = {itemText: document.getElementById("newItemDescription"+listData.listId).value};
-    if(data.itemText !== ""){
-      document.getElementById("packingList"+listData.listId).insertAdjacentHTML("beforeend", toTemplate(document.getElementById("packingListTemp"), data));
-      document.getElementById("newItemDescription"+listData.listId).value = "";
-      updateCount();
-    }
-  });
-
-  document.getElementById("packingList"+listData.listId).addEventListener("change", function(event){
-      if(event.target = "input[type='checkbox']"){
-        event.target.parentNode.classList.toggle("packed");
-        updateCount();
-      }
-  });
-
-  document.getElementById("packingList"+listData.listId).addEventListener("click", function(event){
-      if(event.target.classList.contains("remove")){
-        event.preventDefault();
-        event.target.parentNode.parentNode.removeChild(event.target.parentNode);
-        updateCount();
-      }
-      if(event.target.classList.contains("edit")){
-        event.preventDefault();
-        data = {itemText: event.target.parentNode.children[1].innerText, listId: listData.listId};
-        event.target.parentNode.innerHTML = toTemplate(document.getElementById("editorPackingListTemp"), data);
-      }
-  });
-
-
-  document.getElementById("packingList"+listData.listId).addEventListener("submit", function(event){
-      event.preventDefault();
-      var data = {itemText: document.getElementById("editor"+listData.listId).children[0].value};
-      console.log(data)
-      if(data.itemText !== ""){
-        document.getElementById("editor"+listData.listId).parentNode.classList.remove("packed");
-        document.getElementById("editor"+listData.listId).parentNode.innerHTML = toTemplate(document.getElementById("savePackingListTemp"), data);
-        updateCount();
-      }
-  });
-
-  document.getElementById("deleteItems"+listData.listId).addEventListener("click", function(){
-      document.getElementById("packingList"+listData.listId).innerHTML = "";
-      updateCount();
-  });
-
-  document.getElementById("clearPacked"+listData.listId).addEventListener("click", function(){
-      Array.from(document.querySelectorAll("#noteList"+listData.listId+" .packed")).forEach(function(item){
-          item.parentNode.removeChild(item);
-      });
-      updateCount();
-  });
+  updateCount();
 }
 
 
@@ -112,12 +54,79 @@ document.getElementById("addNewList").addEventListener("click", function(event){
   createNewList(listId);
 });
 
+document.getElementById("allLists").addEventListener("click", function(event){
+  if(event.target.classList.contains("remove") && event.target.parentNode.classList.contains("listTitle")){
+      event.preventDefault();
+      event.target.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode);
+      updateCount();
+  } else if(event.target.classList.contains("rename") && event.target.parentNode.classList.contains("listTitle")){
+    event.preventDefault();
+    var data = {itemText: event.target.parentNode.children[0].innerHTML};
+    event.target.outerHTML = toTemplate(document.getElementById("editorPackingListTemp"), data);
+    updateCount();
+  } else if(event.target.classList.contains("removeLi")){
+    event.preventDefault();
+    event.target.parentNode.parentNode.removeChild(event.target.parentNode);
+    updateCount();
+  } else if(event.target.classList.contains("editLi")){
+    event.preventDefault();
+    var data = {itemText: event.target.parentNode.children[1].innerText};
+    event.target.parentNode.innerHTML = toTemplate(document.getElementById("editorPackingListTemp"), data);
+    updateCount();
+  } else if(event.target.classList.contains("deleteAll")){
+    event.target.parentNode.parentNode.children[2].innerHTML = "";
+    updateCount();
+  } else if(event.target.classList.contains("clearAll")){
+    Array.from(event.target.parentNode.parentNode.children[2].children).forEach(function(item){
+      if(item.classList.contains("packed")){
+          item.parentNode.removeChild(item);
+      }
+    });
+    updateCount();
+  }
+});
 
-/*
+document.getElementById("allLists").addEventListener("submit", function(event){
+  if(event.target.classList.contains("editor") && event.target.parentNode.classList.contains("listTitle")){
+    event.preventDefault();
+    if(event.target.children[0].value !== ""){
+      event.target.parentNode.children[0].innerHTML = event.target.children[0].value;
+      event.target.outerHTML = "<a href='#' class='rename'>Rename List</a>";
+    }
+  } else if(event.target.classList.contains("packingForm")){
+    event.preventDefault();
+    var data = {itemText: event.target.children[0].value};
+    if(data.itemText !== ""){
+      event.target.parentNode.children[2].insertAdjacentHTML("beforeend", toTemplate(document.getElementById("packingListTemp"), data));
+      event.target.children[0].value = "";
+      updateCount();
+    }
+  } else if(event.target.classList.contains("editor") && event.target.parentNode.parentNode.classList. contains("packingList")){
+    var data = {itemText: event.target.children[0].value};
+      if(data.itemText !== ""){
+        event.target.parentNode.parentNode.innerHTML = toTemplate(document.getElementById("packingListTemp"), data);
+        updateCount();
+      }
+  }
+  
+});
+  
+document.getElementById("allLists").addEventListener("change", function(event){
+    if(event.target = "input[type='checkbox']"){
+      event.target.parentNode.classList.toggle("packed");
+      updateCount();
+    }
+});
+
+
 //load saved list from local storage
 window.addEventListener("load", function(){
-  document.getElementById("allLists").innerHTML = localStorage.getItem("savedLists");
-  //updateCount()
+  if(localStorage.length !== 0){
+    document.getElementById("allLists").innerHTML = localStorage.getItem("savedLists");
+    listId = localStorage.getItem("listId");
+  } else {
+    createNewList();
+  }
 })
-*/
+
 
