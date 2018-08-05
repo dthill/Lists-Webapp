@@ -55,27 +55,33 @@ document.getElementById("addNewList").addEventListener("click", function(event){
 });
 
 document.getElementById("allLists").addEventListener("click", function(event){
+  //remove list
   if(event.target.classList.contains("remove") && event.target.parentNode.classList.contains("listTitle")){
       event.preventDefault();
       event.target.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode);
       updateCount();
+  //rename list
   } else if(event.target.classList.contains("rename") && event.target.parentNode.classList.contains("listTitle")){
     event.preventDefault();
     var data = {itemText: event.target.parentNode.children[0].innerHTML};
     event.target.outerHTML = toTemplate(document.getElementById("editorPackingListTemp"), data);
     updateCount();
+  //remove item from a list
   } else if(event.target.classList.contains("removeLi")){
     event.preventDefault();
     event.target.parentNode.parentNode.removeChild(event.target.parentNode);
     updateCount();
+  //edit item in a list
   } else if(event.target.classList.contains("editLi")){
     event.preventDefault();
     var data = {itemText: event.target.parentNode.children[1].innerText};
     event.target.parentNode.innerHTML = toTemplate(document.getElementById("editorPackingListTemp"), data);
     updateCount();
+  //delete all items from list but keep list
   } else if(event.target.classList.contains("deleteAll")){
     event.target.parentNode.parentNode.children[2].innerHTML = "";
     updateCount();
+  //clear all ticked items from list
   } else if(event.target.classList.contains("clearAll")){
     Array.from(event.target.parentNode.parentNode.children[2].children).forEach(function(item){
       if(item.classList.contains("packed")){
@@ -87,12 +93,14 @@ document.getElementById("allLists").addEventListener("click", function(event){
 });
 
 document.getElementById("allLists").addEventListener("submit", function(event){
+  //sumbit renaming of list title
   if(event.target.classList.contains("editor") && event.target.parentNode.classList.contains("listTitle")){
     event.preventDefault();
     if(event.target.children[0].value !== ""){
       event.target.parentNode.children[0].innerHTML = event.target.children[0].value;
       event.target.outerHTML = "<a href='#' class='rename'>Rename List</a>";
     }
+  //add item to list
   } else if(event.target.classList.contains("packingForm")){
     event.preventDefault();
     var data = {itemText: event.target.children[0].value};
@@ -101,6 +109,7 @@ document.getElementById("allLists").addEventListener("submit", function(event){
       event.target.children[0].value = "";
       updateCount();
     }
+  //save edited item to list
   } else if(event.target.classList.contains("editor") && event.target.parentNode.parentNode.classList. contains("packingList")){
     var data = {itemText: event.target.children[0].value};
       if(data.itemText !== ""){
@@ -112,6 +121,7 @@ document.getElementById("allLists").addEventListener("submit", function(event){
 });
   
 document.getElementById("allLists").addEventListener("change", function(event){
+    //change checked status for item in list
     if(event.target = "input[type='checkbox']"){
       event.target.parentNode.classList.toggle("packed");
       updateCount();
