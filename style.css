@@ -138,7 +138,7 @@ a:hover {
 }
 
 .show{
-  display: block;
+  display: inline;
 }
 
 .itemSummary p {
@@ -154,14 +154,3 @@ a:hover {
   color: #777;
 }
 
-.itemSummary .btn {
-  margin-right: 0.5em;
-}
-
-.deleteAll {
-  background-color: #e74c3c;
-}
-
-.deleteAll:hover {
-  background-color: #c0392b;
-}

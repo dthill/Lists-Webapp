@@ -10,14 +10,11 @@
 <body>
 
 	<header>
-		<!-- <h1>Packing List</h1> 
-		 make this editable and put all of the elements in a div then enable div switching
-		add edit button and save button make buttons disapear when saved
-		add minimizer option to just show the title
-		enable drag and drop
-		check saving and retrieving still works
-		-->
-		<a href='#' id='addNewList'>+ Add New List</a>
+		<!--
+		move list up or down
+				-->
+		<a href="#" id="addNewList">+ Add New List</a>
+		<a href="#"" id="removeAllLists">- Remove All Lists</a>
 	</header>
 
 	<div id="allLists"></div>
@@ -28,6 +25,8 @@
 				<h1>List {{listId}}</h1>
 				<a href='#' class='rename'>Rename List</a>
 				<a href='#' class='remove'>Remove List</a>
+				<a href='#' class='deleteAll hide'>Delete All Items</a>
+				<a href='#' class='clearAll hide'>Clear Ticked Items</a>
 			</div>
 			<form class="packingForm">
 				<input type="text" class="newItemDescription" placeholder="What do you want to add?">
@@ -38,9 +37,7 @@
 			
 
 			<div class="itemSummary hide">
-				<p>You have <span>0 items</span> in your list.</p>
-				<button class="btn deleteAll">Delete All Items</button>
-				<button class="btn clearAll">Clear Ticked Items</button>			
+				<p>You have <span>0 items</span> in your list.</p>			
 			</div>
 		</div>
 	</script>	

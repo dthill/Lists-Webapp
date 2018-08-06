@@ -18,7 +18,7 @@ function saveToLocal(){
 }
 
 //updates the count for all the lists, saves all the lists to local storage
-function updateCount(){{}
+function updateCount(){
     //loop through all the lists
     Array.from(document.getElementById("allLists").children).forEach(function(individualList){
       var itemsToPack = 0;
@@ -28,12 +28,22 @@ function updateCount(){{}
           itemsToPack++;
         }
       });
-      //update items left on the list text and make buttons visible invisble if there are items
+      //update items left on the list text and show/hide delete all and clear ticked
       var itemText = itemsToPack === 1 ? itemsToPack + " item" : itemsToPack + " items";
       individualList.children[3].children[0].children[0].innerText = itemText;
-      if(individualList.children[2].children.length){
+      if(individualList.children[2].children.length > 0){
+        individualList.children[0].children[3].classList.add("show");
+        individualList.children[0].children[4].classList.add("show");
+        individualList.children[3].classList.add("show");
+        individualList.children[0].children[3].classList.remove("hide");
+        individualList.children[0].children[4].classList.remove("hide");
         individualList.children[3].classList.remove("hide");
       } else {
+        individualList.children[0].children[3].classList.add("hide");
+        individualList.children[0].children[4].classList.add("hide");
+        individualList.children[3].classList.add("hide");
+        individualList.children[0].children[3].classList.remove("show");
+        individualList.children[0].children[4].classList.remove("show");
         individualList.children[3].classList.remove("show");
       }
     });
@@ -41,17 +51,19 @@ function updateCount(){{}
 }
 
 
-function createNewList(){
+document.getElementById("addNewList").addEventListener("click", function(event){
+  event.preventDefault();
   listId++;
   var listData = {listId: listId};
   document.getElementById("allLists").insertAdjacentHTML("afterbegin", toTemplate(document.getElementById("newList"), listData));
   updateCount();
-}
+});
 
-
-document.getElementById("addNewList").addEventListener("click", function(event){
+document.getElementById("removeAllLists").addEventListener("click", function(event){
   event.preventDefault();
-  createNewList(listId);
+  listId = 0;
+  document.getElementById("allLists").innerHTML = "";
+  updateCount();
 });
 
 document.getElementById("allLists").addEventListener("click", function(event){
@@ -135,7 +147,10 @@ window.addEventListener("load", function(){
     document.getElementById("allLists").innerHTML = localStorage.getItem("savedLists");
     listId = localStorage.getItem("listId");
   } else {
-    createNewList();
+  listId++;
+  var listData = {listId: listId};
+  document.getElementById("allLists").insertAdjacentHTML("afterbegin", toTemplate(document.getElementById("newList"), listData));
+  updateCount();  
   }
 })
 
